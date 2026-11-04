@@ -112,7 +112,7 @@ The frontend registers the plugin's `/cloud-agents` page, including the list,
 The sidebar discovers its Cloud agents item. The backend serves `/api/cloud-agents`.
 
 The source is the Git submodule `external/cloud-agents`, pinned to
-`510910d1716e4be3fbf9530f5dc8099a91b831be`; its three plugin directories are Yarn
+`cd392881769d0a406818b71ca4bd8aece92764a8`; its three plugin directories are Yarn
 workspaces. No npm publication or vendored source copy is needed. Yarn 4 Git
 workspace packing was tested: upstream's prepack rewrites entry points to `dist`
 but does not build it, leaving archives without executable entry points. Building
@@ -130,13 +130,20 @@ docker build -t backstage:cloud-agents .
 git add external/cloud-agents yarn.lock
 ```
 
-Production requires these additional environment variables:
+Production uses these additional environment variables. The runner backend URL is
+optional; the other variables are required:
 
 | Variable                      | Purpose                                                 |
 | ----------------------------- | ------------------------------------------------------- |
 | `CLOUD_AGENTS_NAMESPACE`      | Namespace for Jobs, Pods, and Secrets (`cloud-agents`)  |
 | `CLOUD_AGENTS_RUNNER_IMAGE`   | Runner image tag or digest                              |
 | `CLOUD_AGENTS_ENCRYPTION_KEY` | Stable base64-encoded 32-byte credential encryption key |
+| `CLOUD_AGENTS_RUNNER_BACKEND_URL` | Optional Backstage base URL reachable by runner pods, such as `http://backstage.default.svc.cluster.local` |
+
+With the runner backend URL set, pods fetch the current GitHub token through
+`/api/cloud-agents/runner/github-token` using a per-run token. The plugin handles
+this route's authentication; a missing or invalid run token returns HTTP 401.
+Without the URL, the app still starts and pods use their initial `GH_TOKEN`.
 
 The plugin reuses `AUTH_GITHUB_CLIENT_ID` and `AUTH_GITHUB_CLIENT_SECRET`. Add
 `https://backstage.antoinelaborderie.com/api/cloud-agents/me/github/callback`
@@ -167,8 +174,8 @@ python3 scripts/run-cloud-agent-check.py http://localhost:17007
 ```
 
 The first check uses only the image's production config: readiness, frontend,
-guest refresh HTTP 404, GitHub redirect, and non-root UID. The launcher then writes
-an additional local config under its printed `/tmp/backstage-cloud-check.*`
+guest refresh HTTP 404, runner credential HTTP 401, GitHub redirect, and non-root
+UID. The launcher then writes an additional local config under its printed `/tmp/backstage-cloud-check.*`
 directory, mounts it at runtime, and explicitly enables guest only for that run.
 Use `PORT=17008` to choose another loopback port, or set
 `CLOUD_AGENTS_RUNNER_IMAGE` to another image already loaded into kind.

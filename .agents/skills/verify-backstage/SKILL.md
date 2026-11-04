@@ -25,13 +25,17 @@ Ports are allocated dynamically on loopback; never reuse another instance.
 ## Drive
 
 The executable helper `scripts/verify-image.sh` requests readiness and `/`, then
-checks guest refresh returns 404 and GitHub start redirects to GitHub. It also
-checks the runtime UID. Read `features/README.md` for mapped journeys.
+checks guest refresh returns 404, runner credential requests without a run token
+return the plugin's 401, and GitHub start redirects to GitHub. Run once without
+`CLOUD_AGENTS_RUNNER_BACKEND_URL` and once with it set to a runner-reachable base
+URL to check the optional production config. The helper also checks the runtime
+UID.
 
 ## Evidence
 
 The helper prints `/tmp/backstage-proof.*`, containing `backend.log`,
-`readiness.json`, `index.html`, `guest.json`, and `github.headers`. Preserve it.
+`readiness.json`, `index.html`, `guest.json`, `runner.json`, and `github.headers`.
+Preserve it.
 These exercise the production HTTP routes on the real image and real Postgres.
 Dummy OAuth credentials prove configuration and redirect only; a completed login
 requires the owner's GitHub session and real credentials. The resolver's source
