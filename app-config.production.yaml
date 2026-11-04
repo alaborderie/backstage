@@ -32,6 +32,7 @@ catalog:
 cloudAgents:
   namespace: ${CLOUD_AGENTS_NAMESPACE}
   runnerImage: ${CLOUD_AGENTS_RUNNER_IMAGE}
+  runnerBackendUrl: ${CLOUD_AGENTS_RUNNER_BACKEND_URL}
   encryptionKey: ${CLOUD_AGENTS_ENCRYPTION_KEY}
   github:
     clientId: ${AUTH_GITHUB_CLIENT_ID}
