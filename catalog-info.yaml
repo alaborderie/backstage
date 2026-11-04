@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: backstage
+  description: Antoine's developer portal
+  annotations:
+    github.com/project-slug: alaborderie/backstage
+spec:
+  type: website
+  owner: user:default/alaborderie
+  lifecycle: production

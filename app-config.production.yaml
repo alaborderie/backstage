@@ -1,0 +1,30 @@
+app:
+  baseUrl: https://backstage.antoinelaborderie.com
+backend:
+  baseUrl: https://backstage.antoinelaborderie.com
+  listen: ':7007'
+  cors:
+    origin: https://backstage.antoinelaborderie.com
+  auth:
+    keys:
+      - secret: ${BACKEND_SECRET}
+  database:
+    client: pg
+    connection:
+      host: ${POSTGRES_HOST}
+      port: ${POSTGRES_PORT}
+      user: ${POSTGRES_USER}
+      password: ${POSTGRES_PASSWORD}
+auth:
+  environment: production
+  providers:
+    github:
+      production:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+catalog:
+  locations:
+    - type: file
+      target: ./catalog/org.yaml
+      rules:
+        - allow: [User]
