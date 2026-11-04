@@ -1,0 +1,47 @@
+app:
+  title: Antoine's Backstage
+  baseUrl: http://localhost:3000
+  packages: all
+  extensions:
+    - page:catalog:
+        config:
+          path: /
+organization:
+  name: Antoine Laborderie
+backend:
+  baseUrl: http://localhost:7007
+  listen:
+    port: 7007
+  csp:
+    connect-src: ["'self'", 'http:', 'https:']
+  cors:
+    origin: http://localhost:3000
+    methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
+    credentials: true
+  database:
+    client: better-sqlite3
+    connection: ':memory:'
+integrations:
+  github:
+    - host: github.com
+techdocs:
+  builder: external
+  publisher:
+    type: local
+auth:
+  environment: development
+  providers:
+    github:
+      development:
+        clientId: ${AUTH_GITHUB_CLIENT_ID}
+        clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+catalog:
+  rules:
+    - allow: [Component, System, API, Resource, Location]
+  locations:
+    - type: file
+      target: ../../catalog/org.yaml
+      rules:
+        - allow: [User]
+permission:
+  enabled: true
