@@ -34,7 +34,8 @@
   },
   "workspaces": [
     "packages/*",
-    "plugins/*"
+    "plugins/*",
+    "external/cloud-agents/plugins/*"
   ],
   "devDependencies": {
     "@backstage/cli": "^0.36.7",

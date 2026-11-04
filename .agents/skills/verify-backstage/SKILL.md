@@ -46,3 +46,18 @@ failure. It preserves the evidence directory. Never kill shared services.
 
 `bash scripts/verify-image.sh <image>` runs launch, doctor through readiness,
 drive, evidence capture, and cleanup. A nonzero exit means failure.
+
+## Cloud agents
+
+Initialize the pinned source with `git submodule update --init --recursive`
+before installing. The production smoke helper supplies dummy cloud-agents
+settings and still requires guest refresh HTTP 404. For a real agent check,
+follow README's "Local image check against kind": start the runtime-only guest
+config with `scripts/start-cloud-agents-check.sh <image>`, then run
+`python3 scripts/run-cloud-agent-check.py http://localhost:17007`. This stores
+local credentials through the API without printing them and requires a real
+OpenCode sandbox agent to succeed. Inspect `/cloud-agents` and
+`/cloud-agents/settings` in the browser, choosing Guest. Use the launcher's
+printed cleanup command and remove its evidence directory after inspection
+(the directory contains a kind admin kubeconfig). No production deployment or
+secret changes are part of verification.

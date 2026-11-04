@@ -1,0 +1,3 @@
+[submodule "external/cloud-agents"]
+	path = external/cloud-agents
+	url = https://github.com/alaborderie/backstage-plugin-cloud-agents.git
