@@ -19,6 +19,8 @@ done
 docker run -d --name "$prefix-app" --network "$prefix" -p 127.0.0.1::7007 \
   -e POSTGRES_HOST="$prefix-db" -e POSTGRES_PORT=5432 -e POSTGRES_USER=postgres \
   -e POSTGRES_PASSWORD=proof -e AUTH_GITHUB_CLIENT_ID=dummy -e AUTH_GITHUB_CLIENT_SECRET=dummy \
+  -e CLOUD_AGENTS_NAMESPACE=cloud-agents -e CLOUD_AGENTS_RUNNER_IMAGE=proof-unused \
+  -e CLOUD_AGENTS_ENCRYPTION_KEY=AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA= \
   -e BACKEND_SECRET=proof-only-backend-secret-with-32-characters "$image" >/dev/null
 port=$(docker port "$prefix-app" 7007/tcp | cut -d: -f2)
 base="http://127.0.0.1:$port"

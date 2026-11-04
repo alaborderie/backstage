@@ -28,3 +28,11 @@ catalog:
       target: ./catalog/org.yaml
       rules:
         - allow: [User]
+
+cloudAgents:
+  namespace: ${CLOUD_AGENTS_NAMESPACE}
+  runnerImage: ${CLOUD_AGENTS_RUNNER_IMAGE}
+  encryptionKey: ${CLOUD_AGENTS_ENCRYPTION_KEY}
+  github:
+    clientId: ${AUTH_GITHUB_CLIENT_ID}
+    clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}

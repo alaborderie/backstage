@@ -1,3 +1,7 @@
+import {
+  coreServices,
+  createBackendFeatureLoader,
+} from '@backstage/backend-plugin-api';
 import { createBackend } from '@backstage/backend-defaults';
 
 const backend = createBackend();
@@ -59,5 +63,17 @@ backend.add(import('@backstage/plugin-signals-backend'));
 
 // mcp actions plugin
 backend.add(import('@backstage/plugin-mcp-actions-backend'));
+
+backend.add(import('@alaborderie/plugin-cloud-agents-backend'));
+backend.add(
+  createBackendFeatureLoader({
+    deps: { config: coreServices.rootConfig },
+    async *loader({ config }) {
+      if (config.has('auth.providers.guest')) {
+        yield import('@backstage/plugin-auth-backend-module-guest-provider');
+      }
+    },
+  }),
+);
 
 backend.start();
