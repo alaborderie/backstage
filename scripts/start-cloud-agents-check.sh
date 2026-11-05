@@ -39,6 +39,7 @@ docker create --name "$prefix-app" --network "$prefix" -p "127.0.0.1:$port:7007"
   -e KUBECONFIG=/app/kubeconfig \
   -e POSTGRES_HOST="$prefix-db" -e POSTGRES_PORT=5432 -e POSTGRES_USER=postgres -e POSTGRES_PASSWORD=proof \
   -e AUTH_GITHUB_CLIENT_ID=dummy -e AUTH_GITHUB_CLIENT_SECRET=dummy \
+  -e GITHUB_APP_ID=1 -e GITHUB_APP_PRIVATE_KEY=unused \
   -e BACKEND_SECRET=proof-only-backend-secret-with-32-characters \
   -e CLOUD_AGENTS_NAMESPACE=cloud-agents \
   -e CLOUD_AGENTS_RUNNER_IMAGE="${CLOUD_AGENTS_RUNNER_IMAGE:-ghcr.io/alaborderie/cloud-agent-runner:sha-de01b1b}" \

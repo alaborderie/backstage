@@ -57,6 +57,8 @@ the production GitHub OAuth app callback as
 | `POSTGRES_PORT`             | PostgreSQL port, usually `5432`, production only           |
 | `POSTGRES_USER`             | PostgreSQL role, production only                           |
 | `POSTGRES_PASSWORD`         | PostgreSQL password, production only                       |
+| `GITHUB_APP_ID`             | GitHub App id for the catalog inventory, production only   |
+| `GITHUB_APP_PRIVATE_KEY`    | GitHub App private key, production only                    |
 
 The Postgres role must be able to create Backstage plugin databases. Persist the
 Postgres data and provide TLS options through an additional config file if the
@@ -64,6 +66,75 @@ Postgres connection requires them. Keep credentials outside git. The allowlist
 checks the GitHub-authenticated username, case-insensitively, then resolves
 `user:default/alaborderie` through the catalog. Missing catalog users fail closed.
 GitHub usernames can be renamed; review this allowlist if ownership changes.
+
+## Catalog inventory
+
+`plugins/catalog-backend-module-inventory` adds two catalog entity providers.
+They refresh every 15 minutes (`inventory.schedule`).
+
+- `inventory-github` lists every repository of the owners in
+  `inventory.github.owners` as a `repository` Component in the entity namespace
+  of its owner (`component:duscraft/garry`). Archived repositories are
+  `deprecated`; forks, private and archived repositories are tagged. With an App
+  installation on the owner it lists private repositories too. Without one it
+  lists public repositories and logs one warning naming the owner. Installing
+  the App on `duscraft` adds its private repositories, such as `pensee`, at the
+  next refresh with no code change.
+- `inventory-k3s` reads the cluster through `KUBECONFIG`, `~/.kube/config`, or
+  the in-cluster ServiceAccount `default/backstage`. It only lists namespaces,
+  Services, Deployments, StatefulSets, DaemonSets, CronJobs, Jobs and Traefik
+  `ingressroutes.traefik.io`; it never reads Secrets. Namespaces become
+  `namespace` Resources, IngressRoutes `ingress-route` Resources, and
+  Postgres, Redis, MySQL or MongoDB workloads `database` Resources (Bitnami
+  primary and replica StatefulSets of one Helm release are one database). Other
+  workloads become Components of type `api`, `frontend`, `bot`, `job`,
+  `cronjob`, `worker` or `service`, classified by the table in
+  `src/classify.ts`. Workload entities live in the entity namespace of their k3s
+  namespace.
+
+A workload links to the repository its `ghcr.io/<owner>/<image>` image comes
+from: the full image name, then the name with trailing `-segments` dropped
+(`garry-api` -> `duscraft/garry`). It never links across owners. Linked
+components carry `github.com/project-slug`, `subcomponentOf` the repository,
+and that repository's owner. Ingress routes are a dependency of the components
+behind their Services. Components depend on their namespace and on databases
+whose name prefix they share or whose Service an env value names.
+
+A failed read logs a warning and keeps the last entities of that provider.
+Workloads in `kube-system`, `kube-public`, `kube-node-lease`, `cloud-agents`
+and `yourdevteam-runs`, and Jobs created by CronJobs, are skipped. Override a
+type or a repository per workload:
+
+```yaml
+inventory:
+  kubernetes:
+    overrides:
+      - workload: default/opencode-web
+        type: frontend
+        repository: alaborderie/opencode
+```
+
+Production configures `integrations.github` with the GitHub App from
+`GITHUB_APP_ID`, `GITHUB_APP_PRIVATE_KEY`, `AUTH_GITHUB_CLIENT_ID` and
+`AUTH_GITHUB_CLIENT_SECRET`, and the Kubernetes plugin with the in-cluster
+ServiceAccount. Cluster reads need cluster-wide get, list and watch on the
+resources above, granted to `default/backstage` in `k3s-ovh-config`. Until that
+RBAC exists, production logs the failed read and starts normally.
+
+To check the inventory locally against the live cluster and the GitHub App:
+
+```sh
+bash scripts/start-catalog-check.sh ghcr.io/alaborderie/backstage:latest
+python3 scripts/check-catalog.py http://localhost:17010
+```
+
+The launcher reads the current kubectl context and the App id and key from
+Secret `default/backstage-secrets` into mode-600 files, without printing them.
+It runs the image with Postgres 17 and a runtime-only config that enables
+guest sign-in. Open http://localhost:17010/catalog and choose Guest. Its
+printed `stop.sh` removes the containers and the credential files. Point
+`KUBECONFIG` at a read-only kubeconfig to run with fewer rights; the providers
+only list.
 
 ## External plugins
 

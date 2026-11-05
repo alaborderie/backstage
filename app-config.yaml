@@ -36,6 +36,7 @@ backend:
     port: 7007
   csp:
     connect-src: ["'self'", 'http:', 'https:']
+    img-src: ["'self'", 'data:', 'https://avatars.githubusercontent.com']
   cors:
     origin: http://localhost:3000
     methods: [GET, HEAD, PATCH, POST, PUT, DELETE]
@@ -64,6 +65,15 @@ catalog:
     - type: file
       target: ../../catalog/org.yaml
       rules:
-        - allow: [User]
+        - allow: [User, Group]
+inventory:
+  github:
+    owners:
+      - login: alaborderie
+        entityRef: user:default/alaborderie
+      - login: duscraft
+        entityRef: group:default/duscraft
+  kubernetes:
+    owner: user:default/alaborderie
 permission:
   enabled: true

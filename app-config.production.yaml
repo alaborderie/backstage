@@ -15,6 +15,24 @@ backend:
       port: ${POSTGRES_PORT}
       user: ${POSTGRES_USER}
       password: ${POSTGRES_PASSWORD}
+integrations:
+  github:
+    - host: github.com
+      apps:
+        - appId: ${GITHUB_APP_ID}
+          privateKey: ${GITHUB_APP_PRIVATE_KEY}
+          clientId: ${AUTH_GITHUB_CLIENT_ID}
+          clientSecret: ${AUTH_GITHUB_CLIENT_SECRET}
+kubernetes:
+  serviceLocatorMethod:
+    type: multiTenant
+  clusterLocatorMethods:
+    - type: config
+      clusters:
+        - name: k3s
+          url: https://kubernetes.default.svc
+          authProvider: serviceAccount
+          caFile: /var/run/secrets/kubernetes.io/serviceaccount/ca.crt
 auth:
   environment: production
   providers:
@@ -27,7 +45,7 @@ catalog:
     - type: file
       target: ./catalog/org.yaml
       rules:
-        - allow: [User]
+        - allow: [User, Group]
 
 cloudAgents:
   namespace: ${CLOUD_AGENTS_NAMESPACE}
