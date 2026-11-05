@@ -105,6 +105,27 @@ Commit `yarn.lock`; keep Backstage package versions compatible with this app.
 Verification instructions live in `.agents/skills/verify-backstage/SKILL.md`.
 Use `/maintain-verification-skill` when routes, auth, or startup change.
 
+## Ember home and navigation
+
+`external/ember` pins `alaborderie/backstage-ember` at
+`369a2aaa4569807e8cc470bada440424cccf752e`. Its `plugins/*` directories are
+Yarn workspaces and are copied into the Docker build. The app discovers both
+`@alaborderie/backstage-plugin-app-module-ember` and
+`@alaborderie/backstage-plugin-home-module-github` through `app.packages: all`.
+Ember supplies the only theme, responsive navigation, greeting and home tiles.
+
+The home page is `/`; the catalog is `/catalog`. `app-config.yaml` sets a
+7-column issues panel beside 5-column pull requests and cloud agents panels.
+The compact 12/6/6-row heights keep empty guest widgets usable; loaded lists
+scroll within their panels. Users can resize the grid. Issues use owner
+`alaborderie` and hide the `on-hold` label by default. GitHub widgets require a
+GitHub session to load data; guest auth is only for local verification.
+
+To update Ember, fetch and check out a reviewed full SHA in `external/ember`,
+run the checks above, and commit the submodule pin with `yarn.lock`.
+Production image tags are pinned separately in `k3s-ovh-config/backstage.yaml`;
+open a tag bump PR after the main image publishes. Merging that PR deploys it.
+
 ## Cloud agents
 
 The frontend registers the plugin's `/cloud-agents` page, including the list,
@@ -112,7 +133,7 @@ The frontend registers the plugin's `/cloud-agents` page, including the list,
 The sidebar discovers its Cloud agents item. The backend serves `/api/cloud-agents`.
 
 The source is the Git submodule `external/cloud-agents`, pinned to
-`cd392881769d0a406818b71ca4bd8aece92764a8`; its three plugin directories are Yarn
+`b2aa949beb3232b9173abac4c65b844f3a6abdd8`; its three plugin directories are Yarn
 workspaces. No npm publication or vendored source copy is needed. Yarn 4 Git
 workspace packing was tested: upstream's prepack rewrites entry points to `dist`
 but does not build it, leaving archives without executable entry points. Building

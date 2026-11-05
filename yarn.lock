@@ -19,6 +19,78 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@alaborderie/backstage-plugin-app-module-ember@workspace:^, @alaborderie/backstage-plugin-app-module-ember@workspace:external/ember/plugins/app-module-ember":
+  version: 0.0.0-use.local
+  resolution: "@alaborderie/backstage-plugin-app-module-ember@workspace:external/ember/plugins/app-module-ember"
+  dependencies:
+    "@backstage/cli": "npm:^0.36.7"
+    "@backstage/core-components": "npm:^0.18.15"
+    "@backstage/core-plugin-api": "npm:^1.12.11"
+    "@backstage/frontend-defaults": "npm:^0.5.7"
+    "@backstage/frontend-dev-utils": "npm:^0.1.7"
+    "@backstage/frontend-plugin-api": "npm:^0.18.2"
+    "@backstage/frontend-test-utils": "npm:^0.6.5"
+    "@backstage/plugin-app-react": "npm:^0.2.8"
+    "@backstage/plugin-notifications": "npm:^0.6.1"
+    "@backstage/plugin-search": "npm:^1.7.9"
+    "@backstage/plugin-search-react": "npm:^1.11.9"
+    "@backstage/test-utils": "npm:^1.7.23"
+    "@backstage/theme": "npm:^0.7.3"
+    "@backstage/ui": "npm:^0.19.0"
+    "@fontsource-variable/geist": "npm:^5.3.0"
+    "@fontsource-variable/geist-mono": "npm:^5.3.0"
+    "@material-ui/core": "npm:^4.12.2"
+    "@material-ui/icons": "npm:^4.9.1"
+    "@testing-library/dom": "npm:^9.0.0"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^14.0.0"
+    "@testing-library/user-event": "npm:^14.0.0"
+    lucide-react: "npm:^1.66.0"
+    react: "npm:^18.0.2"
+    react-dom: "npm:^18.0.2"
+    react-router-dom: "npm:^6.30.2"
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+    react-router-dom: ^6.30.2
+  languageName: unknown
+  linkType: soft
+
+"@alaborderie/backstage-plugin-home-module-github@workspace:^, @alaborderie/backstage-plugin-home-module-github@workspace:external/ember/plugins/home-module-github":
+  version: 0.0.0-use.local
+  resolution: "@alaborderie/backstage-plugin-home-module-github@workspace:external/ember/plugins/home-module-github"
+  dependencies:
+    "@alaborderie/backstage-plugin-app-module-ember": "workspace:^"
+    "@backstage/cli": "npm:^0.36.7"
+    "@backstage/core-components": "npm:^0.18.15"
+    "@backstage/core-plugin-api": "npm:^1.12.11"
+    "@backstage/errors": "npm:^1.3.2"
+    "@backstage/frontend-defaults": "npm:^0.5.7"
+    "@backstage/frontend-dev-utils": "npm:^0.1.7"
+    "@backstage/frontend-plugin-api": "npm:^0.18.2"
+    "@backstage/frontend-test-utils": "npm:^0.6.5"
+    "@backstage/plugin-home": "npm:^0.9.11"
+    "@backstage/plugin-home-react": "npm:^0.1.43"
+    "@backstage/plugin-search": "npm:^1.7.9"
+    "@backstage/test-utils": "npm:^1.7.23"
+    "@backstage/types": "npm:^1.2.2"
+    "@backstage/ui": "npm:^0.19.0"
+    "@testing-library/dom": "npm:^9.0.0"
+    "@testing-library/jest-dom": "npm:^6.0.0"
+    "@testing-library/react": "npm:^14.0.0"
+    "@testing-library/user-event": "npm:^14.0.0"
+    lucide-react: "npm:^1.66.0"
+    react: "npm:^18.0.2"
+    react-dom: "npm:^18.0.2"
+    react-router-dom: "npm:^6.30.2"
+    zod: "npm:^3.25.76 || ^4.0.0"
+  peerDependencies:
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+    react-router-dom: ^6.30.2
+  languageName: unknown
+  linkType: soft
+
 "@alaborderie/plugin-cloud-agents-backend@workspace:^, @alaborderie/plugin-cloud-agents-backend@workspace:external/cloud-agents/plugins/cloud-agents-backend":
   version: 0.0.0-use.local
   resolution: "@alaborderie/plugin-cloud-agents-backend@workspace:external/cloud-agents/plugins/cloud-agents-backend"
@@ -67,15 +139,16 @@ __metadata:
     "@backstage/frontend-plugin-api": "npm:^0.18.2"
     "@backstage/frontend-test-utils": "npm:^0.6.5"
     "@backstage/plugin-app-react": "npm:^0.2.8"
+    "@backstage/plugin-home-react": "npm:^0.1.43"
     "@backstage/test-utils": "npm:^1.7.23"
-    "@material-ui/core": "npm:^4.12.2"
-    "@material-ui/icons": "npm:^4.9.1"
-    "@material-ui/lab": "npm:4.0.0-alpha.61"
+    "@backstage/ui": "npm:^0.19.0"
+    "@remixicon/react": "npm:~4.8.0"
     "@testing-library/dom": "npm:^9.0.0"
     "@testing-library/jest-dom": "npm:^6.0.0"
     "@testing-library/react": "npm:^14.0.0"
     "@testing-library/user-event": "npm:^14.0.0"
     react: "npm:^18.0.2"
+    react-aria-components: "npm:~1.22.0"
     react-dom: "npm:^18.0.2"
     react-router-dom: "npm:^6.30.2"
   peerDependencies:
@@ -2336,6 +2409,26 @@ __metadata:
     "@types/react":
       optional: true
   checksum: 10c0/fbb149f667e88264dac10fea4cd7ddc55db677c4bd45ba1db791054002e947d91bd4bb7949bf09caae727558ff8f1355f7f9841dcee7c3130e9e85a2d45ea6b7
+  languageName: node
+  linkType: hard
+
+"@backstage/frontend-dev-utils@npm:^0.1.7":
+  version: 0.1.7
+  resolution: "@backstage/frontend-dev-utils@npm:0.1.7"
+  dependencies:
+    "@backstage/frontend-defaults": "npm:^0.5.7"
+    "@backstage/frontend-plugin-api": "npm:^0.18.2"
+    "@backstage/plugin-app": "npm:^0.5.4"
+    "@backstage/ui": "npm:^0.19.0"
+  peerDependencies:
+    "@types/react": ^17.0.0 || ^18.0.0
+    react: ^17.0.0 || ^18.0.0
+    react-dom: ^17.0.0 || ^18.0.0
+    react-router-dom: ^6.30.2
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10c0/22c806914f07e357e55f88db9fa935381962600b67e24ba592b60fe8d99255c5537488306eb8fae57a21e784ab7665361552bf84e71dd5180277b54d49621323
   languageName: node
   linkType: hard
 
@@ -5063,6 +5156,20 @@ __metadata:
   version: 0.2.12
   resolution: "@floating-ui/utils@npm:0.2.12"
   checksum: 10c0/bb910b90d56991a62011afaf5f8e0c4b7fb6dab69403f4dd17fbd6eb25560b28d533dff9791f270b4f459852e9006a1077b5d73cbedb5e34d9424afc6a828314
+  languageName: node
+  linkType: hard
+
+"@fontsource-variable/geist-mono@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "@fontsource-variable/geist-mono@npm:5.3.0"
+  checksum: 10c0/21a4097b3ccce08cbc181199f68a9193adc17d997ef8d883eab7565c6d79a82b2f8d7656f32f97b66f1f0b4ebba78a1a822c6318d55e0c5f572d74683ab036ee
+  languageName: node
+  linkType: hard
+
+"@fontsource-variable/geist@npm:^5.3.0":
+  version: 5.3.0
+  resolution: "@fontsource-variable/geist@npm:5.3.0"
+  checksum: 10c0/6b1d1d249643377c885d040769bf0964f242e8d03c4470535329ad4eed3d30a8134fea0d45c0b99b8069924a1f506a3bcb5b8d9cea77b7b5234dc7dd57371842
   languageName: node
   linkType: hard
 
@@ -8746,7 +8853,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@remixicon/react@npm:>=4.6.0 <4.9.0":
+"@remixicon/react@npm:>=4.6.0 <4.9.0, @remixicon/react@npm:~4.8.0":
   version: 4.8.0
   resolution: "@remixicon/react@npm:4.8.0"
   peerDependencies:
@@ -12785,6 +12892,8 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "app@workspace:packages/app"
   dependencies:
+    "@alaborderie/backstage-plugin-app-module-ember": "workspace:^"
+    "@alaborderie/backstage-plugin-home-module-github": "workspace:^"
     "@alaborderie/plugin-cloud-agents": "workspace:^"
     "@backstage/cli": "npm:^0.36.7"
     "@backstage/core-components": "npm:^0.18.15"
@@ -22077,6 +22186,19 @@ __metadata:
   version: 1.1.5
   resolution: "lru.min@npm:1.1.5"
   checksum: 10c0/28580d8d03728ad4dc0fce4a8f56c3a5b8e25fbf51b0c4c64ca0cf7da5a2032b6d7c5ae206b42fbb271a85bc1686b22c9d1a1a675c54b68e797a396f72af9ae4
+  languageName: node
+  linkType: hard
+
+"lucide-react@npm:^1.66.0":
+  version: 1.66.0
+  resolution: "lucide-react@npm:1.66.0"
+  peerDependencies:
+    "@types/react": "*"
+    react: ^16.5.1 || ^17.0.0 || ^18.0.0 || ^19.0.0
+  peerDependenciesMeta:
+    "@types/react":
+      optional: true
+  checksum: 10c0/de56abab6b8a311975dd11b504ee838376dfaebdc52ba525cef22b226e0977c732be543c7fc8bb3b5f23f64da8ef2566762b9419d5cd798f7488c629f638a914
   languageName: node
   linkType: hard
 

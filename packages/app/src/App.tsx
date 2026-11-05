@@ -9,8 +9,6 @@ import { SignInPage } from '@backstage/core-components';
 import { SignInPageBlueprint } from '@backstage/plugin-app-react';
 import cloudAgentsPlugin from '@alaborderie/plugin-cloud-agents';
 import catalogPlugin from '@backstage/plugin-catalog/alpha';
-import { navModule } from './modules/nav';
-import { homeModule } from './modules/home';
 
 const signInPage = SignInPageBlueprint.make({
   params: {
@@ -39,8 +37,6 @@ export default createApp({
   features: [
     catalogPlugin,
     cloudAgentsPlugin,
-    navModule,
-    homeModule,
     createFrontendModule({ pluginId: 'app', extensions: [signInPage] }),
   ],
 });
