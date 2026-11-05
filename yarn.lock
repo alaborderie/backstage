@@ -146,6 +146,8 @@ __metadata:
   resolution: "@alaborderie/plugin-cloud-agents@workspace:external/cloud-agents/plugins/cloud-agents"
   dependencies:
     "@alaborderie/plugin-cloud-agents-common": "workspace:^"
+    "@backstage/catalog-client": "npm:^1.16.0"
+    "@backstage/catalog-model": "npm:^1.10.2"
     "@backstage/cli": "npm:^0.36.7"
     "@backstage/core-components": "npm:^0.18.15"
     "@backstage/core-plugin-api": "npm:^1.12.11"
@@ -154,6 +156,8 @@ __metadata:
     "@backstage/frontend-plugin-api": "npm:^0.18.2"
     "@backstage/frontend-test-utils": "npm:^0.6.5"
     "@backstage/plugin-app-react": "npm:^0.2.8"
+    "@backstage/plugin-catalog": "npm:^2.0.10"
+    "@backstage/plugin-catalog-react": "npm:^3.3.0"
     "@backstage/plugin-home-react": "npm:^0.1.43"
     "@backstage/test-utils": "npm:^1.7.23"
     "@backstage/ui": "npm:^0.19.0"
@@ -1620,7 +1624,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@backstage/catalog-client@npm:^1.16.3":
+"@backstage/catalog-client@npm:^1.16.0, @backstage/catalog-client@npm:^1.16.3":
   version: 1.16.3
   resolution: "@backstage/catalog-client@npm:1.16.3"
   dependencies:
