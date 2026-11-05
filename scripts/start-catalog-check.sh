@@ -18,7 +18,9 @@ rm -f $evidence/kubeconfig $evidence/github-app.pem $evidence/app-config.local.y
 echo "Stopped. Logs: $evidence/backend.log"
 SH
 chmod 700 "$evidence/stop.sh"
-trap 'bash "$evidence/stop.sh" >/dev/null 2>&1' EXIT INT TERM
+trap 'bash "$evidence/stop.sh" >/dev/null 2>&1' EXIT
+trap 'exit 130' INT
+trap 'exit 143' TERM
 
 kubectl config view --minify --flatten --raw > "$evidence/kubeconfig"
 secret() {
