@@ -50,6 +50,31 @@ The home grid uses compact 12/6/6-row heights for issues/PRs/agents, with issues
 spanning both right-hand panels. Loaded lists scroll within their panels.
 The catalog now lives at `/catalog`, not `/`.
 
+## Catalog inventory
+
+Requires Docker, kubectl access to the k3s cluster, and Python 3. Start the
+image against the live cluster and the GitHub App, then run the checker:
+
+```sh
+bash scripts/start-catalog-check.sh <image>
+python3 scripts/check-catalog.py http://localhost:17010
+```
+
+The launcher reads the App id and key from Secret `default/backstage-secrets`
+into mode-600 files and never prints them. It enables guest only in its runtime
+config. The checker signs in as guest, waits for the first refresh, and
+requires: `namespace`, `ingress-route` and `database` Resources; `api`,
+`frontend`, `bot`, `cronjob`, `worker` and `service` Components; repository
+Components in the `alaborderie` and `duscraft` namespaces; the duscraft
+membership; `garry-api`, `keyroll` and `sfg-bot` linked to their repositories;
+`garry-api-route` serving `garry-api`; and `garry-api` and `backstage`
+depending on their databases. It prints the `job` count for information, since
+the cluster has no standalone Job. `pensee-api` links only once the App is
+installed on duscraft. In the browser, choose Guest and inspect `/catalog`,
+`/catalog/default/component/garry-api`, `/catalog/duscraft/component/garry`
+and `/catalog/default/resource/garry-api-route` at 1440px and 390px with the
+Ember checks above. Run the printed `stop.sh` afterwards.
+
 ## Evidence
 
 The helper prints `/tmp/backstage-proof.*`, containing `backend.log`,
@@ -68,7 +93,10 @@ failure. It preserves the evidence directory. Never kill shared services.
 ## Helpers
 
 `bash scripts/verify-image.sh <image>` runs launch, doctor through readiness,
-drive, evidence capture, and cleanup. A nonzero exit means failure.
+drive, evidence capture, and cleanup. A nonzero exit means failure. It also
+proves startup survives an unreachable cluster and dummy GitHub App values.
+`scripts/start-catalog-check.sh` and `scripts/check-catalog.py` prove the
+catalog inventory against the live cluster.
 
 ## Cloud agents
 

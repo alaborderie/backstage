@@ -5,4 +5,21 @@ metadata:
 spec:
   profile:
     displayName: Antoine Laborderie
-  memberOf: []
+  memberOf: [duscraft]
+---
+apiVersion: backstage.io/v1alpha1
+kind: Group
+metadata:
+  name: duscraft
+  title: Duscraft
+  links:
+    - url: https://github.com/duscraft
+      title: GitHub
+      icon: github
+spec:
+  type: organization
+  profile:
+    displayName: Duscraft
+    picture: https://avatars.githubusercontent.com/u/220408275?v=4
+  children: []
+  members: [alaborderie]
