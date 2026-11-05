@@ -67,6 +67,7 @@ backend.add(import('@backstage/plugin-signals-backend'));
 backend.add(import('@backstage/plugin-mcp-actions-backend'));
 
 backend.add(import('@alaborderie/plugin-cloud-agents-backend'));
+backend.add(import('@alaborderie/plugin-assistant-backend'));
 // Hub run tokens authenticate the cloud-agents actions; see backend.auth.externalAccess.
 backend.add(cloudAgentsHubRunTokens);
 backend.add(

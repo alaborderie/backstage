@@ -7,6 +7,7 @@ import {
 } from '@backstage/core-plugin-api';
 import { SignInPage } from '@backstage/core-components';
 import { SignInPageBlueprint } from '@backstage/plugin-app-react';
+import assistantPlugin from '@alaborderie/plugin-assistant';
 import cloudAgentsPlugin from '@alaborderie/plugin-cloud-agents';
 import catalogPlugin from '@backstage/plugin-catalog/alpha';
 
@@ -37,6 +38,7 @@ export default createApp({
   features: [
     catalogPlugin,
     cloudAgentsPlugin,
+    assistantPlugin,
     createFrontendModule({ pluginId: 'app', extensions: [signInPage] }),
   ],
 });
