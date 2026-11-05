@@ -14,6 +14,11 @@ COPY tsconfig.json app-config*.yaml ./
 RUN node .yarn/releases/yarn-4.13.0.cjs tsc && node .yarn/releases/yarn-4.13.0.cjs build:backend
 RUN mkdir /bundle && tar xzf packages/backend/dist/skeleton.tar.gz -C /bundle && tar xzf packages/backend/dist/bundle.tar.gz -C /bundle
 RUN node .yarn/releases/yarn-4.13.0.cjs workspaces focus --all --production
+# Yarn nests a workspace's dependency when its version differs from the root
+# one, and the bundle carries no node_modules, so copy the nested ones over.
+RUN for dir in packages/* plugins/* external/*/plugins/*; do \
+      if [ -d "$dir/node_modules" ] && [ -d "/bundle/$dir" ]; then cp -a "$dir/node_modules" "/bundle/$dir/"; fi; \
+    done
 
 FROM node:24-trixie-slim AS runtime
 ENV NODE_ENV=production
