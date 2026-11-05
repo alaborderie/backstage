@@ -202,9 +202,11 @@ open a tag bump PR after the main image publishes. Merging that PR deploys it.
 The frontend registers the plugin's `/cloud-agents` page, including the list,
 `/cloud-agents/new`, `/cloud-agents/agents/:id`, and `/cloud-agents/settings`.
 The sidebar discovers its Cloud agents item. The backend serves `/api/cloud-agents`.
+Entities with `github.com/project-slug` show a New agent card that opens
+`/cloud-agents/new` with the repository and entity context prefilled.
 
 The source is the Git submodule `external/cloud-agents`, pinned to
-`b2aa949beb3232b9173abac4c65b844f3a6abdd8`; its three plugin directories are Yarn
+`d39f2051795485d7f9210f2b50ee10b55dc6fe89`; its three plugin directories are Yarn
 workspaces. No npm publication or vendored source copy is needed. Yarn 4 Git
 workspace packing was tested: upstream's prepack rewrites entry points to `dist`
 but does not build it, leaving archives without executable entry points. Building
