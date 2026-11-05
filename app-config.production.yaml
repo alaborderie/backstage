@@ -8,6 +8,22 @@ backend:
   auth:
     keys:
       - secret: ${BACKEND_SECRET}
+    externalAccess:
+      - type: cloud-agents-hub-run
+        options: {}
+        accessRestrictions:
+          - plugin: cloud-agents
+  # Every plugin that registers actions; a plugin left out loses its actions.
+  actions:
+    pluginSources:
+      - auth
+      - catalog
+      - cloud-agents
+      - kubernetes
+      - notifications
+      - scaffolder
+      - search
+      - techdocs
   database:
     client: pg
     connection:

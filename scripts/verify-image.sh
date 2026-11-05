@@ -42,5 +42,19 @@ grep -Eq '"message": *"Unknown or finished run"' "$evidence/runner.json"
 status=$(curl -sS -D "$evidence/github.headers" -o /dev/null -w '%{http_code}' "$base/api/auth/github/start?env=production&origin=https%3A%2F%2Fbackstage.antoinelaborderie.com")
 test "$status" = 302
 grep -qi '^location: https://github.com/login/oauth/authorize' "$evidence/github.headers"
+hub_token=$(docker exec "$prefix-app" node -e '
+const c = require("node:crypto");
+const key = Buffer.from(c.hkdfSync("sha256", Buffer.from(process.env.CLOUD_AGENTS_ENCRYPTION_KEY, "base64"), Buffer.alloc(0), "cloud-agents hub run token v1", 32));
+const body = `cahub.no-such-run.${Math.floor(Date.now() / 1000) + 600}`;
+process.stdout.write(`${body}.${c.createHmac("sha256", key).update(body).digest("base64url")}`);')
+invoke="$base/api/cloud-agents/.backstage/actions/v1/actions/cloud-agents:list-agents/invoke"
+status=$(curl -sS -o "$evidence/hub-forged.json" -w '%{http_code}' -X POST -H 'Content-Type: application/json' -H "Authorization: Bearer ${hub_token%.*}.forged" -d '{}' "$invoke")
+test "$status" = 401
+status=$(curl -sS -o "$evidence/hub-signed.json" -w '%{http_code}' -X POST -H 'Content-Type: application/json' -H "Authorization: Bearer $hub_token" -d '{}' "$invoke")
+test "$status" = 403
+grep -q 'not an active hub run' "$evidence/hub-signed.json"
+status=$(curl -sS -o "$evidence/actions.json" -w '%{http_code}' -H "Authorization: Bearer $hub_token" "$base/api/cloud-agents/.backstage/actions/v1/actions")
+test "$status" = 200
+test "$(grep -o '"id":"cloud-agents:[a-z-]*"' "$evidence/actions.json" | wc -l)" = 6
 test "$(docker exec "$prefix-app" id -u)" != 0
-echo 'PASS: ready, frontend served, guest absent, runner rejects missing run token, GitHub redirects, non-root'
+echo 'PASS: ready, frontend served, guest absent, runner rejects missing run token, GitHub redirects, hub run tokens reach the six cloud-agents actions, non-root'

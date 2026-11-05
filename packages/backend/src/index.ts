@@ -3,6 +3,7 @@ import {
   createBackendFeatureLoader,
 } from '@backstage/backend-plugin-api';
 import { createBackend } from '@backstage/backend-defaults';
+import { cloudAgentsHubRunTokens } from '@alaborderie/plugin-cloud-agents-backend';
 
 const backend = createBackend();
 
@@ -66,6 +67,8 @@ backend.add(import('@backstage/plugin-signals-backend'));
 backend.add(import('@backstage/plugin-mcp-actions-backend'));
 
 backend.add(import('@alaborderie/plugin-cloud-agents-backend'));
+// Hub run tokens authenticate the cloud-agents actions; see backend.auth.externalAccess.
+backend.add(cloudAgentsHubRunTokens);
 backend.add(
   createBackendFeatureLoader({
     deps: { config: coreServices.rootConfig },
