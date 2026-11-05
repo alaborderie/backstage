@@ -8,6 +8,14 @@ backend:
   auth:
     keys:
       - secret: ${BACKEND_SECRET}
+    externalAccess:
+      - type: cloud-agents-hub-run
+        options: {}
+        accessRestrictions:
+          - plugin: cloud-agents
+  actions:
+    pluginSources:
+      - cloud-agents
   database:
     client: pg
     connection:
