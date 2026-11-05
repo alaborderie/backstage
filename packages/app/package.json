@@ -16,6 +16,7 @@
   "dependencies": {
     "@alaborderie/backstage-plugin-app-module-ember": "workspace:^",
     "@alaborderie/backstage-plugin-home-module-github": "workspace:^",
+    "@alaborderie/plugin-assistant": "workspace:^",
     "@alaborderie/plugin-cloud-agents": "workspace:^",
     "@backstage/cli": "^0.36.7",
     "@backstage/core-components": "^0.18.15",

@@ -16,6 +16,7 @@
     "build-image": "docker build ../.. -f Dockerfile --tag backstage"
   },
   "dependencies": {
+    "@alaborderie/plugin-assistant-backend": "workspace:^",
     "@alaborderie/plugin-catalog-backend-module-inventory": "workspace:^",
     "@alaborderie/plugin-cloud-agents-backend": "workspace:^",
     "@backstage/backend-defaults": "^0.18.1",
