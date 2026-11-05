@@ -9,6 +9,16 @@ port=${PORT:-17010}
 prefix="backstage-catalog-check-$$"
 umask 077
 evidence=$(mktemp -d /tmp/backstage-catalog-check.XXXXXX)
+cat > "$evidence/stop.sh" <<SH
+#!/usr/bin/env bash
+docker logs $prefix-app > $evidence/backend.log 2>&1
+docker rm -f $prefix-app $prefix-db >/dev/null
+docker network rm $prefix >/dev/null
+rm -f $evidence/kubeconfig $evidence/github-app.pem $evidence/app-config.local.yaml
+echo "Stopped. Logs: $evidence/backend.log"
+SH
+chmod 700 "$evidence/stop.sh"
+trap 'bash "$evidence/stop.sh" >/dev/null 2>&1' EXIT INT TERM
 
 kubectl config view --minify --flatten --raw > "$evidence/kubeconfig"
 secret() {
@@ -45,16 +55,6 @@ inventory:
 YAML
 unset app_id
 
-cat > "$evidence/stop.sh" <<SH
-#!/usr/bin/env bash
-docker logs $prefix-app > $evidence/backend.log 2>&1
-docker rm -f $prefix-app $prefix-db >/dev/null
-docker network rm $prefix >/dev/null
-rm -f $evidence/kubeconfig $evidence/github-app.pem $evidence/app-config.local.yaml
-echo "Stopped. Logs: $evidence/backend.log"
-SH
-chmod 700 "$evidence/stop.sh"
-trap 'bash "$evidence/stop.sh" >/dev/null 2>&1' ERR
 
 docker network create "$prefix" >/dev/null
 docker run -d --name "$prefix-db" --network "$prefix" -e POSTGRES_PASSWORD=proof postgres:17 >/dev/null
@@ -80,5 +80,6 @@ for _ in $(seq 1 120); do
   sleep 2
 done
 curl -fsS "http://localhost:$port/.backstage/health/v1/readiness"
+trap - EXIT INT TERM
 printf '\nURL: http://localhost:%s/catalog\nCheck: python3 scripts/check-catalog.py http://localhost:%s\nCleanup: bash %s/stop.sh\n' \
   "$port" "$port" "$evidence"
