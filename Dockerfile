@@ -21,6 +21,10 @@ RUN for dir in packages/* plugins/* external/*/plugins/*; do \
     done
 
 FROM node:24-trixie-slim AS runtime
+ARG CLAUDE_CODE_VERSION=2.1.318
+# The assistant's reasoning tool runs Claude Code with each user's Claude Code token.
+RUN npm install -g --no-fund --no-audit "@anthropic-ai/claude-code@${CLAUDE_CODE_VERSION}" \
+ && npm cache clean --force
 ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=build --chown=node:node /app/node_modules ./node_modules
