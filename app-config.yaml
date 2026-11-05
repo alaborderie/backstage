@@ -3,9 +3,31 @@ app:
   baseUrl: http://localhost:3000
   packages: all
   extensions:
-    - page:catalog:
+    - theme:app/light: false
+    - theme:app/dark: false
+    - page:home:
         config:
           path: /
+          defaultConfig:
+            - component: GithubOpenIssues
+              column: 0
+              row: 0
+              width: 7
+              height: 12
+            - component: GithubPullRequests
+              column: 7
+              row: 0
+              width: 5
+              height: 6
+            - component: home-page-widget:cloud-agents/cloud-agents
+              column: 7
+              row: 6
+              width: 5
+              height: 6
+    - home-page-widget:home/github-issues:
+        config:
+          owner: alaborderie
+          hiddenLabels: [on-hold]
 organization:
   name: Antoine Laborderie
 backend:

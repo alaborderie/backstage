@@ -8,6 +8,7 @@ COPY .yarnrc.yml package.json yarn.lock backstage.json ./
 COPY packages packages
 COPY plugins plugins
 COPY external/cloud-agents/plugins external/cloud-agents/plugins
+COPY external/ember/plugins external/ember/plugins
 RUN node .yarn/releases/yarn-4.13.0.cjs install --immutable
 COPY tsconfig.json app-config*.yaml ./
 RUN node .yarn/releases/yarn-4.13.0.cjs tsc && node .yarn/releases/yarn-4.13.0.cjs build:backend

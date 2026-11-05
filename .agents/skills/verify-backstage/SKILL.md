@@ -31,6 +31,25 @@ return the plugin's 401, and GitHub start redirects to GitHub. Run once without
 URL to check the optional production config. The helper also checks the runtime
 UID.
 
+## Ember routes and responsive UI
+
+For local browser checks, use a runtime-only guest config; never enable guest in
+production config. Start the built image with isolated Postgres and dummy OAuth
+and cloud-agents values, as in the smoke helper, adding this config at runtime.
+No real agent, kubeconfig, credentials, or Kubernetes calls are needed for UI
+checks. Do not run the real-agent recipe below when only checking UI.
+
+Choose Guest, then inspect `/` (home), `/catalog`, `/cloud-agents`,
+`/cloud-agents/new`, and `/cloud-agents/settings` at widths 1440px and 390px.
+Require `body[data-theme-name="ember"]`, no horizontal document overflow, and
+no console errors from app or plugin code. Home must show the greeting, tiles,
+Open issues, Pull requests and Cloud agents. The cloud widget's defaultConfig
+component name is `home-page-widget:cloud-agents/cloud-agents`: upstream uses
+its extension ID because the widget declares no explicit `params.name`.
+The home grid uses compact 12/6/6-row heights for issues/PRs/agents, with issues
+spanning both right-hand panels. Loaded lists scroll within their panels.
+The catalog now lives at `/catalog`, not `/`.
+
 ## Evidence
 
 The helper prints `/tmp/backstage-proof.*`, containing `backend.log`,

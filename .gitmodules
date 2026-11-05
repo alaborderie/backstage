@@ -1,3 +1,6 @@
 [submodule "external/cloud-agents"]
 	path = external/cloud-agents
 	url = https://github.com/alaborderie/backstage-plugin-cloud-agents.git
+[submodule "external/ember"]
+	path = external/ember
+	url = https://github.com/alaborderie/backstage-ember.git
