@@ -179,7 +179,7 @@ Use `/maintain-verification-skill` when routes, auth, or startup change.
 ## Ember home and navigation
 
 `external/ember` pins `alaborderie/backstage-ember` at
-`369a2aaa4569807e8cc470bada440424cccf752e`. Its `plugins/*` directories are
+`305db1b510fbe8198c12947fc79c2c196ee2b977`. Its `plugins/*` directories are
 Yarn workspaces and are copied into the Docker build. The app discovers both
 `@alaborderie/backstage-plugin-app-module-ember` and
 `@alaborderie/backstage-plugin-home-module-github` through `app.packages: all`.
