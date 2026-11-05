@@ -57,4 +57,5 @@ status=$(curl -sS -o "$evidence/actions.json" -w '%{http_code}' -H "Authorizatio
 test "$status" = 200
 test "$(grep -o '"id":"cloud-agents:[a-z-]*"' "$evidence/actions.json" | wc -l)" = 6
 test "$(docker exec "$prefix-app" id -u)" != 0
-echo 'PASS: ready, frontend served, guest absent, runner rejects missing run token, GitHub redirects, hub run tokens reach the six cloud-agents actions, non-root'
+docker exec "$prefix-app" claude --version | tee "$evidence/claude-version.txt" | grep -q 'Claude Code'
+echo 'PASS: ready, frontend served, guest absent, runner rejects missing run token, GitHub redirects, hub run tokens reach the six cloud-agents actions, non-root, Claude Code CLI runs'
